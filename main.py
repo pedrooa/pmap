@@ -58,16 +58,21 @@ def scan_udp(ip, port):
     # print("PORTA: ", port)
     pkt = sr1(IP(dst=ip)/UDP(sport=port, dport=port), timeout=2, verbose=0)
     if pkt == None:
+        banner = "Uknown"
         try:
             banner = socket.getservbyport(port, 'udp')
-            # banner = "placeholder"
-            print("{0}/udp   open  {1}".format(port, banner))
         except:
             pass
+            # banner = "placeholder"
+        print("{0}/udp   open  {1}".format(port, banner))
 
     else:
         if pkt.haslayer(UDP):
-            banner = socket.getservbyport(port, 'udp')
+            banner = "Uknown"
+            try:
+                banner = socket.getservbyport(port, 'udp')
+            except:
+                pass
             print("{0}/udp   open  {1}".format(port, banner))
 
 
